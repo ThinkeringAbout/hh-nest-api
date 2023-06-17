@@ -7,7 +7,7 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() user: { email: string; password: string }) {
+  signIn(@Body() user: { email: string }) {
     return this.authService.signIn(user.email);
   }
 }
