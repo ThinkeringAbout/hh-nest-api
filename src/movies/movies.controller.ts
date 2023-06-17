@@ -26,6 +26,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(
     FileInterceptor('file', {
@@ -54,7 +55,6 @@ export class MoviesController {
     }
   }
 
-  @UseGuards(AuthGuard)
   @Get()
   async findAll(@Query() params: any): Promise<Movie[]> {
     return this.moviesService.findAll(params.sort);
@@ -69,12 +69,14 @@ export class MoviesController {
     };
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async delete(@Param('id') id: string) {
     await this.moviesService.delete(id);
     return 'Successfully deleted';
   }
 
+  @UseGuards(AuthGuard)
   @Put(':id')
   async changeOne(
     @Param('id') id: string,
