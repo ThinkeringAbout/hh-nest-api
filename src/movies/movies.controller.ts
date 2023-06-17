@@ -8,6 +8,7 @@ import {
   Put,
   Query,
   UseInterceptors,
+  UseGuards,
   UploadedFile,
   Render,
 } from '@nestjs/common';
@@ -19,6 +20,7 @@ import { HttpStatus } from '@nestjs/common/enums';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { Helper } from 'src/helpers/filename';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('movies')
 export class MoviesController {
@@ -52,6 +54,7 @@ export class MoviesController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   async findAll(@Query() params: any): Promise<Movie[]> {
     return this.moviesService.findAll(params.sort);
