@@ -13,7 +13,14 @@ export class MoviesService {
     return createdMovie.save();
   }
 
-  async findAll(): Promise<Movie[]> {
+  async findAll(sort: string): Promise<Movie[]> {
+    const sortings = {
+      asc: 1,
+      desc: -1,
+    };
+    if (sortings[sort]) {
+      return this.movieModel.find().sort({ rating: sortings[sort] }).exec();
+    }
     return this.movieModel.find().exec();
   }
 
